@@ -186,6 +186,30 @@ async function clearStore(storeName) {
     return false;
   }
 }
+// ========== COLUMN SANITIZATION FUNCTION ==========
+function sanitizeRecord(store, record) {
+  // Define valid columns for each store based on your actual schema
+  const validColumns = {
+    students: ['id', 'rollNo', 'firstName', 'lastName', 'email', 'department', 'year', 'semester'],
+    faculty: ['id', 'facultyId', 'firstName', 'lastName', 'email', 'department', 'specialization', 'password'],
+    classes: ['id', 'code', 'name', 'department', 'semester', 'faculty', 'year', 'credits'],
+    attendance: ['id', 'classId', 'studentId', 'date', 'session', 'status', 'notes'],
+    years: ['id', 'year', 'startDate', 'endDate', 'type'],
+    settings: ['id', 'key', 'value']
+  };
+  
+  const cleanedRecord = {};
+  const columns = validColumns[store] || [];
+  
+  columns.forEach(column => {
+    if (record.hasOwnProperty(column) && record[column] !== undefined) {
+      cleanedRecord[column] = record[column];
+    }
+  });
+  
+  // If no valid columns found, return the record as-is (let Supabase handle it)
+  return Object.keys(cleanedRecord).length > 0 ? cleanedRecord : record;
+}
 
 async function exportAllInOne() {
   showToast("Preparing bulk export...", "info");
@@ -2536,3 +2560,4 @@ async function exportAllData() {
   a.download = `attendance_backup_${new Date().getTime()}.json`;
   a.click();
 }
+
