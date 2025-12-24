@@ -1,8 +1,8 @@
 // config.js - Supabase Configuration
 // Update these with your Supabase credentials
 
-const SUPABASE_URL = "https://your-project-name.supabase.co"; // Replace with your URL
-const SUPABASE_ANON_KEY = "YOUR_ANON_KEY_HERE"; // Replace with your anon key
+const SUPABASE_URL = "https://iqxpnpiimzospvsxgbvb.supabase.co"; // Replace with your URL
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxeHBucGlpbXpvc3B2c3hnYnZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMzczMTksImV4cCI6MjA4MTkxMzMxOX0.dt9wwOynnIjhsI6mYAeqdWArWuAElyOnuDRCuEpMXU0"; // Replace with your anon key
 
 const ADMIN_PASSWORD = "GecKaimur@148";
 
