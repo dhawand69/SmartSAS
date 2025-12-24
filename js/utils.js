@@ -170,6 +170,23 @@ function parseCSVToObjects(csvText) {
   return result;
 }
 
+// ========== CLEAR STORE FUNCTION - REQUIRED FOR IMPORTS ==========
+async function clearStore(storeName) {
+  try {
+    const allRecords = await getAll(storeName);
+
+    for (const record of allRecords) {
+      await deleteRecord(storeName, record.id);
+    }
+
+    console.log(`✅ Cleared store: ${storeName}`);
+    return true;
+  } catch (error) {
+    console.error(`❌ Error clearing store ${storeName}:`, error);
+    return false;
+  }
+}
+
 async function exportAllInOne() {
   showToast("Preparing bulk export...", "info");
 
