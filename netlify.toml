@@ -1,0 +1,53 @@
+[build]
+  # No build step needed for static site
+  command = "echo 'No build required - static deployment'"
+  publish = "."
+
+# Redirect all routes to index.html for SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Allow Firebase domain
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.gstatic.com https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://*.firebaseio.com https://*.firebase.googleapis.com"
+
+# Cache static assets
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Production context
+[context.production]
+  # Production environment variables
+  environment = { NODE_ENV = "production" }
+  
+  [context.production.edge_functions]
+    function = "functions"
+
+# Deploy preview context
+[context.deploy-preview]
+  environment = { NODE_ENV = "preview" }
+
+# Branch preview context
+[context.branch-deploy]
+  environment = { NODE_ENV = "preview" }
