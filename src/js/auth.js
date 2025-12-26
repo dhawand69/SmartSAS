@@ -1,3 +1,7 @@
+import { getAll, updateRecord, addRecord, getRecord } from '../config/firebase-database.js';
+import { auth, realtimeDb } from '../config/firebase-config.js';
+
+
 function switchLoginTab(role) {
   document
     .querySelectorAll(".login-tab")
