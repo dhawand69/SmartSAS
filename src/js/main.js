@@ -1,3 +1,7 @@
+import { initDB } from '../config/firebase-database.js';
+import { auth, app } from '../config/firebase-config.js';
+
+
 document.getElementById("confirmActionBtn").onclick = function () {
   if (pendingAction) pendingAction();
   closeModal("confirmationModal");
@@ -45,3 +49,4 @@ document.getElementById("attendanceDate").valueAsDate = new Date();
       await updateClassFilterDropdown(semesterFilter, branchFilter);
     });
 })();
+
