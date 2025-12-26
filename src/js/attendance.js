@@ -1,3 +1,6 @@
+import { getAll, updateRecord, addRecord } from '../config/firebase-database.js';
+
+
 // =============================================
 // ATTENDANCE MANAGEMENT FUNCTIONS
 // =============================================
