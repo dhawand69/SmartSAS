@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <!-- External CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="src/css/styles.css">
 </head>
 
 <body>
@@ -131,7 +131,6 @@
                 <div id="adminUsers" class="tab-content active">
                     <h2 class="section-title">👥 Students</h2>
 
-                    <!-- New Filter Dashboard -->
                     <div class="filter-container">
                         <div class="filter-group">
                             <span class="filter-label">🎓 Select Academic Year:</span>
@@ -620,116 +619,111 @@
                 </div>
 
                 <!-- Bulk Export Tab -->
-<div id="adminBulkExport" class="tab-content">
+                <div id="adminBulkExport" class="tab-content">
+                    <h2 class="section-title">📤 Bulk Export</h2>
 
-    <h2 class="section-title">📤 Bulk Export</h2>
+                    <div class="alert alert-info">
+                        ℹ️ Export complete datasets in CSV format. Data is grouped by year where applicable.
+                    </div>
 
-    <div class="alert alert-info">
-        ℹ️ Export complete datasets in CSV format. Data is grouped by year where applicable.
-    </div>
+                    <!-- Export Cards -->
+                    <div class="dashboard-grid export-grid">
+                        <div class="stat-card export-card" onclick="exportBulkData('students')" tabindex="0" role="button">
+                            <div class="export-card-inner">
+                                <div class="export-icon">👥</div>
+                                <h3 class="export-title">Export Students</h3>
+                                <p class="export-desc">
+                                    Year-wise grouping<br>
+                                    All student details included
+                                </p>
+                            </div>
+                        </div>
 
-    <!-- Export Cards -->
-    <div class="dashboard-grid export-grid">
+                        <div class="stat-card export-card" onclick="exportBulkData('classes')" tabindex="0" role="button">
+                            <div class="export-card-inner">
+                                <div class="export-icon">📚</div>
+                                <h3 class="export-title">Export Classes</h3>
+                                <p class="export-desc">
+                                    Year-wise grouping<br>
+                                    All class details included
+                                </p>
+                            </div>
+                        </div>
 
-        <div class="stat-card export-card" onclick="exportBulkData('students')" tabindex="0" role="button">
-            <div class="export-card-inner">
-                <div class="export-icon">👥</div>
-                <h3 class="export-title">Export Students</h3>
-                <p class="export-desc">
-                    Year-wise grouping<br>
-                    All student details included
-                </p>
-            </div>
-        </div>
+                        <div class="stat-card export-card" onclick="exportBulkData('faculty')" tabindex="0" role="button">
+                            <div class="export-card-inner">
+                                <div class="export-icon">👨‍🏫</div>
+                                <h3 class="export-title">Export Faculty</h3>
+                                <p class="export-desc">
+                                    Complete faculty list<br>
+                                    All details included
+                                </p>
+                            </div>
+                        </div>
 
-        <div class="stat-card export-card" onclick="exportBulkData('classes')" tabindex="0" role="button">
-            <div class="export-card-inner">
-                <div class="export-icon">📚</div>
-                <h3 class="export-title">Export Classes</h3>
-                <p class="export-desc">
-                    Year-wise grouping<br>
-                    All class details included
-                </p>
-            </div>
-        </div>
+                        <div class="stat-card export-card" onclick="exportAllInOne()" tabindex="0" role="button">
+                            <div class="export-card-inner">
+                                <div class="export-icon">📦</div>
+                                <h3 class="export-title">Export All Data</h3>
+                                <p class="export-desc">
+                                    Students + Classes + Faculty<br>
+                                    Multiple CSV files
+                                </p>
+                            </div>
+                        </div>
 
-        <div class="stat-card export-card" onclick="exportBulkData('faculty')" tabindex="0" role="button">
-            <div class="export-card-inner">
-                <div class="export-icon">👨‍🏫</div>
-                <h3 class="export-title">Export Faculty</h3>
-                <p class="export-desc">
-                    Complete faculty list<br>
-                    All details included
-                </p>
-            </div>
-        </div>
+                        <div class="stat-card export-card" onclick="exportCompleteDatabase()" tabindex="0" role="button">
+                            <div class="export-card-inner">
+                                <div class="export-icon">💾</div>
+                                <h3 class="export-title">Complete Database Export</h3>
+                                <p class="export-desc">
+                                    EVERYTHING in one ZIP<br>
+                                    Including attendance history
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="stat-card export-card" onclick="exportAllInOne()" tabindex="0" role="button">
-            <div class="export-card-inner">
-                <div class="export-icon">📦</div>
-                <h3 class="export-title">Export All Data</h3>
-                <p class="export-desc">
-                    Students + Classes + Faculty<br>
-                    Multiple CSV files
-                </p>
-            </div>
-        </div>
+                    <!-- Statistics -->
+                    <div class="export-stats">
+                        <h3>📊 Export Statistics</h3>
 
-        <div class="stat-card export-card" onclick="exportCompleteDatabase()" tabindex="0" role="button">
-            <div class="export-card-inner">
-                <div class="export-icon">💾</div>
-                <h3 class="export-title">Complete Database Export</h3>
-                <p class="export-desc">
-                    EVERYTHING in one ZIP<br>
-                    Including attendance history
-                </p>
-            </div>
-        </div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <h4>Students</h4>
+                                <div id="exportStudentCount" class="stat-number">0</div>
+                                <p>Total students available for export</p>
+                            </div>
 
-    </div>
+                            <div class="stat-item">
+                                <h4>Faculty</h4>
+                                <div id="exportFacultyCount" class="stat-number">0</div>
+                                <p>Total faculty available for export</p>
+                            </div>
 
-    <!-- Statistics -->
-    <div class="export-stats">
-        <h3>📊 Export Statistics</h3>
+                            <div class="stat-item">
+                                <h4>Classes</h4>
+                                <div id="exportClassCount" class="stat-number">0</div>
+                                <p>Total classes available for export</p>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h4>Students</h4>
-                <div id="exportStudentCount" class="stat-number">0</div>
-                <p>Total students available for export</p>
-            </div>
-
-            <div class="stat-item">
-                <h4>Faculty</h4>
-                <div id="exportFacultyCount" class="stat-number">0</div>
-                <p>Total faculty available for export</p>
-            </div>
-
-            <div class="stat-item">
-                <h4>Classes</h4>
-                <div id="exportClassCount" class="stat-number">0</div>
-                <p>Total classes available for export</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Info -->
-    <div class="export-info">
-        <h3>ℹ️ Export Information</h3>
-        <ul>
-            <li>All exports are in CSV format (compatible with Excel)</li>
-            <li>Students are grouped by academic year</li>
-            <li>Classes are grouped by academic year</li>
-            <li>Faculty export includes all details including specialization</li>
-            <li>Use <strong>Export All Data</strong> to get everything in one go</li>
-            <li>
-                <strong>Complete Database Export</strong> includes attendance records and settings
-            </li>
-        </ul>
-    </div>
-
-</div>
-
+                    <!-- Info -->
+                    <div class="export-info">
+                        <h3>ℹ️ Export Information</h3>
+                        <ul>
+                            <li>All exports are in CSV format (compatible with Excel)</li>
+                            <li>Students are grouped by academic year</li>
+                            <li>Classes are grouped by academic year</li>
+                            <li>Faculty export includes all details including specialization</li>
+                            <li>Use <strong>Export All Data</strong> to get everything in one go</li>
+                            <li>
+                                <strong>Complete Database Export</strong> includes attendance records and settings
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
                 <!-- Settings Tab -->
                 <div id="adminSettings" class="tab-content">
@@ -856,7 +850,6 @@
                             (CSV)</button>
                         <button class="btn btn-info" onclick="downloadSubjectAttendanceReport()">📊 Download Subject
                             Attendance Report</button>
-
                     </div>
 
                     <div class="form-row">
@@ -1535,23 +1528,33 @@
     <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- ================ EXTERNAL JAVASCRIPT FILES ================ -->
-    <!-- No inline JavaScript - all code in external files -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/database.js"></script>
-    <script src="js/import.js"></script>
-    <script src="js/export.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/attendance.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/main.js"></script>
-
-
+    <!-- ================ FIREBASE REALTIME SYNC - MODULE SYSTEM ================ -->
+    <script type="module">
+        // Initialize Firebase and load all modules
+        import { initDB } from './src/config/firebase-database.js';
+        import { app, auth, realtimeDb } from './src/config/firebase-config.js';
+        
+        // Load all application modules
+        import('./src/js/auth.js');
+        import('./src/js/ui.js');
+        import('./src/js/attendance.js');
+        import('./src/js/utils.js');
+        import('./src/js/ss.js');
+        
+        // Initialize database on app start
+        initDB().then(() => {
+            console.log('✅ Application initialized with Firebase Realtime Database');
+        }).catch(err => {
+            console.error('❌ Initialization error:', err);
+        });
+        
+        // Make functions globally available for onclick handlers
+        window.initDB = initDB;
+        window.auth = auth;
+        window.realtimeDb = realtimeDb;
+        window.app = app;
+    </script>
 
 </body>
 
 </html>
-
-
