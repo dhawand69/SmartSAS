@@ -4,17 +4,18 @@
 
 // Firebase Configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY || "AIzaSyD...", // Replace with your config
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN || "attendance-system.firebaseapp.com",
-  databaseURL: process.env.FIREBASE_DATABASE_URL || "https://attendance-system.firebaseio.com",
-  projectId: process.env.FIREBASE_PROJECT_ID || "attendance-system",
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "attendance-system.appspot.com",
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || "123456789",
-  appId: process.env.FIREBASE_APP_ID || "1:123456789:web:abcd1234efgh5678"
+  apiKey: "AIzaSyAFbxV129SYgkMro-i4lcCQKP9WesuzQZ4",
+  authDomain: "attendance-system-produc-c869a.firebaseapp.com",
+  databaseURL: "https://attendance-system-produc-c869a-default-rtdb.firebaseio.com",
+  projectId: "attendance-system-produc-c869a",
+  storageBucket: "attendance-system-produc-c869a.firebasestorage.app",
+  messagingSenderId: "564725590338",
+  appId: "1:564725590338:web:11d297823e7f15920340db",
+  measurementId: "G-6WRXV7QPG6"
 };
 
-// Admin Password (stored in Netlify env vars)
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "GecKaimur@148";
+const ADMIN_PASSWORD = "GecKaimur@148";
+
 
 // Branch Map
 const branchMap = {
