@@ -4,14 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Attendance System - Firebase</title>
+    <title>Advanced Attendance System</title>
 
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
 
     <!-- External CSS -->
     <link rel="stylesheet" href="css/styles.css">
@@ -27,22 +23,22 @@
             </div>
 
             <div class="login-tabs">
-                <div class="login-tab active" data-role="admin">Admin</div>
-                <div class="login-tab" data-role="faculty">Faculty</div>
-                <div class="login-tab" data-role="student">Student</div>
+                <div class="login-tab active" onclick="switchLoginTab('admin')" data-role="admin">Admin</div>
+                <div class="login-tab" onclick="switchLoginTab('faculty')" data-role="faculty">Faculty</div>
+                <div class="login-tab" onclick="switchLoginTab('student')" data-role="student">Student</div>
             </div>
 
             <!-- Admin Login Form -->
             <div id="adminLoginForm" class="login-form active">
                 <div class="alert alert-error" id="adminLoginError"></div>
-                <form id="adminLoginForm">
+                <form onsubmit="handleAdminLogin(event)">
                     <div class="form-group">
                         <label>Admin Password:</label>
                         <input type="password" id="adminPassword" placeholder="Enter password" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-full">Login as Admin</button>
                     <p style="margin-top:10px; font-size:12px; color:var(--color-gray); text-align:center;">
-                        Default password: admin123
+                        <!--Default password: admin123-->
                     </p>
                 </form>
             </div>
@@ -50,7 +46,7 @@
             <!-- Faculty Login Form -->
             <div id="facultyLoginForm" class="login-form">
                 <div class="alert alert-error" id="facultyLoginError"></div>
-                <form id="facultyLoginForm">
+                <form onsubmit="handleFacultyLogin(event)">
                     <div class="form-group">
                         <label>Faculty ID:</label>
                         <input type="text" id="loginFacultyId" placeholder="Enter Faculty ID" required>
@@ -66,7 +62,7 @@
             <!-- Student Login Form -->
             <div id="studentLoginForm" class="login-form">
                 <div class="alert alert-error" id="studentLoginError"></div>
-                <form id="studentLoginForm">
+                <form onsubmit="handleStudentLogin(event)">
                     <div class="form-group">
                         <label>Registration Number (Roll No):</label>
                         <input type="text" id="loginStudentId" placeholder="Enter Reg No (e.g. 22156148040)" required>
@@ -624,114 +620,121 @@
                 </div>
 
                 <!-- Bulk Export Tab -->
-                <div id="adminBulkExport" class="tab-content">
-                    <h2 class="section-title">📤 Bulk Export</h2>
-                    <div class="alert alert-info">
-                        ℹ️ Export complete datasets in CSV format. Data is grouped by year where applicable.
-                    </div>
+<div id="adminBulkExport" class="tab-content">
 
-                    <!-- Export Cards -->
-                    <div class="dashboard-grid export-grid">
-                        <div class="stat-card export-card" onclick="exportBulkData('students')" tabindex="0" role="button">
-                            <div class="export-card-inner">
-                                <div class="export-icon">👥</div>
-                                <h3 class="export-title">Export Students</h3>
-                                <p class="export-desc">
-                                    Year-wise grouping<br>
-                                    All student details included
-                                </p>
-                            </div>
-                        </div>
+    <h2 class="section-title">📤 Bulk Export</h2>
 
-                        <div class="stat-card export-card" onclick="exportBulkData('classes')" tabindex="0" role="button">
-                            <div class="export-card-inner">
-                                <div class="export-icon">📚</div>
-                                <h3 class="export-title">Export Classes</h3>
-                                <p class="export-desc">
-                                    Year-wise grouping<br>
-                                    All class details included
-                                </p>
-                            </div>
-                        </div>
+    <div class="alert alert-info">
+        ℹ️ Export complete datasets in CSV format. Data is grouped by year where applicable.
+    </div>
 
-                        <div class="stat-card export-card" onclick="exportBulkData('faculty')" tabindex="0" role="button">
-                            <div class="export-card-inner">
-                                <div class="export-icon">👨‍🏫</div>
-                                <h3 class="export-title">Export Faculty</h3>
-                                <p class="export-desc">
-                                    Complete faculty list<br>
-                                    All details included
-                                </p>
-                            </div>
-                        </div>
+    <!-- Export Cards -->
+    <div class="dashboard-grid export-grid">
 
-                        <div class="stat-card export-card" onclick="exportAllInOne()" tabindex="0" role="button">
-                            <div class="export-card-inner">
-                                <div class="export-icon">📦</div>
-                                <h3 class="export-title">Export All Data</h3>
-                                <p class="export-desc">
-                                    Students + Classes + Faculty<br>
-                                    Multiple CSV files
-                                </p>
-                            </div>
-                        </div>
+        <div class="stat-card export-card" onclick="exportBulkData('students')" tabindex="0" role="button">
+            <div class="export-card-inner">
+                <div class="export-icon">👥</div>
+                <h3 class="export-title">Export Students</h3>
+                <p class="export-desc">
+                    Year-wise grouping<br>
+                    All student details included
+                </p>
+            </div>
+        </div>
 
-                        <div class="stat-card export-card" onclick="exportCompleteDatabase()" tabindex="0" role="button">
-                            <div class="export-card-inner">
-                                <div class="export-icon">💾</div>
-                                <h3 class="export-title">Complete Database Export</h3>
-                                <p class="export-desc">
-                                    EVERYTHING in one ZIP<br>
-                                    Including attendance history
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="stat-card export-card" onclick="exportBulkData('classes')" tabindex="0" role="button">
+            <div class="export-card-inner">
+                <div class="export-icon">📚</div>
+                <h3 class="export-title">Export Classes</h3>
+                <p class="export-desc">
+                    Year-wise grouping<br>
+                    All class details included
+                </p>
+            </div>
+        </div>
 
-                    <!-- Statistics -->
-                    <div class="export-stats">
-                        <h3>📊 Export Statistics</h3>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <h4>Students</h4>
-                                <div id="exportStudentCount" class="stat-number">0</div>
-                                <p>Total students available for export</p>
-                            </div>
+        <div class="stat-card export-card" onclick="exportBulkData('faculty')" tabindex="0" role="button">
+            <div class="export-card-inner">
+                <div class="export-icon">👨‍🏫</div>
+                <h3 class="export-title">Export Faculty</h3>
+                <p class="export-desc">
+                    Complete faculty list<br>
+                    All details included
+                </p>
+            </div>
+        </div>
 
-                            <div class="stat-item">
-                                <h4>Faculty</h4>
-                                <div id="exportFacultyCount" class="stat-number">0</div>
-                                <p>Total faculty available for export</p>
-                            </div>
+        <div class="stat-card export-card" onclick="exportAllInOne()" tabindex="0" role="button">
+            <div class="export-card-inner">
+                <div class="export-icon">📦</div>
+                <h3 class="export-title">Export All Data</h3>
+                <p class="export-desc">
+                    Students + Classes + Faculty<br>
+                    Multiple CSV files
+                </p>
+            </div>
+        </div>
 
-                            <div class="stat-item">
-                                <h4>Classes</h4>
-                                <div id="exportClassCount" class="stat-number">0</div>
-                                <p>Total classes available for export</p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="stat-card export-card" onclick="exportCompleteDatabase()" tabindex="0" role="button">
+            <div class="export-card-inner">
+                <div class="export-icon">💾</div>
+                <h3 class="export-title">Complete Database Export</h3>
+                <p class="export-desc">
+                    EVERYTHING in one ZIP<br>
+                    Including attendance history
+                </p>
+            </div>
+        </div>
 
-                    <!-- Info -->
-                    <div class="export-info">
-                        <h3>ℹ️ Export Information</h3>
-                        <ul>
-                            <li>All exports are in CSV format (compatible with Excel)</li>
-                            <li>Students are grouped by academic year</li>
-                            <li>Classes are grouped by academic year</li>
-                            <li>Faculty export includes all details including specialization</li>
-                            <li>Use <strong>Export All Data</strong> to get everything in one go</li>
-                            <li>
-                                <strong>Complete Database Export</strong> includes attendance records and settings
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="export-stats">
+        <h3>📊 Export Statistics</h3>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h4>Students</h4>
+                <div id="exportStudentCount" class="stat-number">0</div>
+                <p>Total students available for export</p>
+            </div>
+
+            <div class="stat-item">
+                <h4>Faculty</h4>
+                <div id="exportFacultyCount" class="stat-number">0</div>
+                <p>Total faculty available for export</p>
+            </div>
+
+            <div class="stat-item">
+                <h4>Classes</h4>
+                <div id="exportClassCount" class="stat-number">0</div>
+                <p>Total classes available for export</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info -->
+    <div class="export-info">
+        <h3>ℹ️ Export Information</h3>
+        <ul>
+            <li>All exports are in CSV format (compatible with Excel)</li>
+            <li>Students are grouped by academic year</li>
+            <li>Classes are grouped by academic year</li>
+            <li>Faculty export includes all details including specialization</li>
+            <li>Use <strong>Export All Data</strong> to get everything in one go</li>
+            <li>
+                <strong>Complete Database Export</strong> includes attendance records and settings
+            </li>
+        </ul>
+    </div>
+
+</div>
+
 
                 <!-- Settings Tab -->
                 <div id="adminSettings" class="tab-content">
                     <h2 class="section-title">⚙️ Settings</h2>
-                    <form id="settingsForm">
+                    <form onsubmit="saveSettings(event)">
                         <div class="form-row">
                             <div class="form-group">
                                 <label>College Name:</label>
@@ -853,6 +856,7 @@
                             (CSV)</button>
                         <button class="btn btn-info" onclick="downloadSubjectAttendanceReport()">📊 Download Subject
                             Attendance Report</button>
+
                     </div>
 
                     <div class="form-row">
@@ -1531,32 +1535,15 @@
     <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- ============================================
-         FIREBASE AND APP SCRIPTS (ORDER MATTERS!)
-         ============================================ -->
-    <!-- Add these in <head> or before closing </body> -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-    
-    <!-- 1. Configuration (Firebase config and environment variables) -->
+    <!-- ================ EXTERNAL JAVASCRIPT FILES ================ -->
+    <!-- No inline JavaScript - all code in external files -->
     <script src="js/config.js"></script>
-    
-    <!-- 2. Database wrapper (Firebase functions) -->
     <script src="js/database.js"></script>
-    
-    <!-- 3. Authentication -->
     <script src="js/auth.js"></script>
-    
-    <!-- 4. Main initialization -->
-    <script src="js/main.js"></script>
-    
-    <!-- 5. Your existing app scripts -->
-    <script src="js/utils.js"></script>
-    <script src="js/ui.js"></script>
     <script src="js/attendance.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
 </body>
+
 </html>
-
-
-
