@@ -5,7 +5,7 @@
   for = "/*"
   [headers.values]
     Cache-Control = "public, max-age=3600"
-    Content-Security-Policy = "script-src 'self' https://www.gstatic.com https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.firebaseio.com https://*.firebaseapp.com; img-src 'self' data:"
+    Content-Security-Policy = "script-src 'self' https://www.gstatic.com https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.firebaseio.com https://*.firebaseapp.com https://www.gstatic.com; img-src 'self' data:"
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     X-XSS-Protection = "1; mode=block"
