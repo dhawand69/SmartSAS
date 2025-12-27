@@ -28,7 +28,7 @@ const branchMap = {
 };
 
 // Global Variables
-let db; // Firebase Database instance
+let db;
 let currentUser = null;
 
 // Filters
@@ -52,12 +52,10 @@ let parsedBatchClasses = [];
 // ============================================
 // Firebase Initialization
 // ============================================
-
 async function initFirebase() {
   try {
-    // Import Firebase modules
-    const app = window.firebase.initializeApp(firebaseConfig);
-    db = window.firebase.database(app);
+    const app = firebase.initializeApp(firebaseConfig);
+    db = firebase.database(app);
     
     console.log("✅ Firebase initialized successfully");
     return true;
@@ -66,9 +64,4 @@ async function initFirebase() {
     showToast("Failed to initialize Firebase. Check console.", "error");
     return false;
   }
-}
-
-// Export for use in other files
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { firebaseConfig, ADMIN_PASSWORD, branchMap };
 }
