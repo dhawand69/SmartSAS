@@ -4,8 +4,9 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Cache-Control = "public, max-age=3600"
-    Content-Security-Policy = "script-src 'self' https://www.gstatic.com https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com https://*.firebaseio.com https://*.firebaseapp.com 'unsafe-inline' 'unsafe-hashes'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.firebaseio.com https://*.firebaseapp.com https://www.gstatic.com https://firestore.googleapis.com; img-src 'self' data:; font-src 'self' data:"
-    X-Content-Type-Types = "nosniff"
+    # Permissive CSP to fix all blocking issues
+    Content-Security-Policy = "default-src * data: blob: 'unsafe-inline' 'unsafe-eval'; script-src * data: blob: 'unsafe-inline' 'unsafe-eval'; connect-src * data: blob: 'unsafe-inline'; img-src * data: blob:; frame-src *; style-src * data: blob: 'unsafe-inline';"
+    X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     X-XSS-Protection = "1; mode=block"
+    Cache-Control = "public, max-age=3600"
