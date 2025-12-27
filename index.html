@@ -35,7 +35,7 @@
             <!-- Admin Login Form -->
             <div id="adminLoginForm" class="login-form active">
                 <div class="alert alert-error" id="adminLoginError"></div>
-                <form onsubmit="handleAdminLogin(event)">
+                <form id="adminLoginForm">
                     <div class="form-group">
                         <label>Admin Password:</label>
                         <input type="password" id="adminPassword" placeholder="Enter password" required>
@@ -50,7 +50,7 @@
             <!-- Faculty Login Form -->
             <div id="facultyLoginForm" class="login-form">
                 <div class="alert alert-error" id="facultyLoginError"></div>
-                <form onsubmit="handleFacultyLogin(event)">
+                <form id="facultyLoginForm">
                     <div class="form-group">
                         <label>Faculty ID:</label>
                         <input type="text" id="loginFacultyId" placeholder="Enter Faculty ID" required>
@@ -66,7 +66,7 @@
             <!-- Student Login Form -->
             <div id="studentLoginForm" class="login-form">
                 <div class="alert alert-error" id="studentLoginError"></div>
-                <form onsubmit="handleStudentLogin(event)">
+                <form id="studentLoginForm">
                     <div class="form-group">
                         <label>Registration Number (Roll No):</label>
                         <input type="text" id="loginStudentId" placeholder="Enter Reg No (e.g. 22156148040)" required>
@@ -731,7 +731,7 @@
                 <!-- Settings Tab -->
                 <div id="adminSettings" class="tab-content">
                     <h2 class="section-title">⚙️ Settings</h2>
-                    <form onsubmit="saveSettings(event)">
+                    <form id="settingsForm">
                         <div class="form-row">
                             <div class="form-group">
                                 <label>College Name:</label>
@@ -1557,5 +1557,6 @@
     <script src="js/attendance.js"></script>
 </body>
 </html>
+
 
 
